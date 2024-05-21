@@ -94,10 +94,10 @@ class PostController extends Controller
         return Post::get();
     }
     public function createPost (Request $request){
-        $data= $request->validate([
+        $data = $request->validate([
             'title'=>['required','string','min:3'],
             'content'=>['required','string','max:5000'],
-            'user_id'=>['required','exist:user,id'],
+            'user_id'=>['required','exists:users,id'],
         ]);
         return Post::create($data);
     }
