@@ -56,3 +56,33 @@ class AuthController extends Controller
     }
 }
 ```
+## cmd
+```
+pamm Post -m
+```
+## schema
+```
+Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('content');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
+```
+## Post
+```
+class Post extends Model
+{
+    use HasFactory;
+    protected $guarded=[];
+    public function author (){
+        return $this->belongsTo(User::class,'user_id');
+    }
+}
+```
+## cmd
+```
+pam
+php artisan make:controller PostController
+```
