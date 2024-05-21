@@ -86,3 +86,28 @@ class Post extends Model
 pam
 php artisan make:controller PostController
 ```
+## PostController
+```
+class PostController extends Controller
+{
+    public function index (){
+        return Post::get();
+    }
+    public function createPost (Request $request){
+        $data= $request->validate([
+            'title'=>['required','string','min:3'],
+            'content'=>['required','string','max:5000'],
+            'user_id'=>['required','exist:user,id'],
+        ]);
+        return Post::create($data);
+    }
+
+}
+```
+## api
+```
+Route::middleware("auth:sanctum")->group(function(){
+    Route::get('/posts',[PostController::class,"index"]);
+    Route::post('/posts',[PostController::class,"createPost"]);
+});
+```
