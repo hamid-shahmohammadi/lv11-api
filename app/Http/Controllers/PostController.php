@@ -8,15 +8,18 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index (){
-        return Post::get();
+        // $post=Post::whereJsonContains('metadata->author', 'ali')->get();
+        $post=Post::first();
+        return $post->metadata['author'];
     }
     public function createPost (Request $request){
-        $data = $request->validate([
-            'title'=>['required','string','min:3'],
-            'content'=>['required','string','max:5000'],
-            'user_id'=>['required','exists:users,id'],
+        $validated = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'metadata' => 'required',
+            'user_id' => 'required',
         ]);
-        return Post::create($data);
+        return Post::create($validated);
     }
 
 }
