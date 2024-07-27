@@ -39,7 +39,11 @@ public function createPost(Request $request)
         activity()
             ->performedOn($post)
             ->causedBy(Auth::user())
-            ->withProperties(['url' => route('api.create.post')])
+            ->withProperties([
+                'url' => route('api.create.post'),
+                'type' => 'create',
+                'attr'=>$post->toArray()
+            ])
             ->log('api create post');
 
         return $post;
