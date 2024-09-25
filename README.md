@@ -111,3 +111,7 @@ Route::middleware("auth:sanctum")->group(function(){
     Route::post('/posts',[PostController::class,"createPost"]);
 });
 ```
+## DB::listen
+```
+DB::listen(fn($query)=>info($query->toRawSql()));
+```
